@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Lato", sans-serif;
+        font-size: 20pt;
+        font-weight: normal;
+        background: lightblue;
+               
+        background: -moz-linear-gradient(
+          -90deg,
+        lightblue,
+        black
+        ); 
+        background: linear-gradient(-90deg, lightblue, black); 
+      }
+      div {
+				width: 100vw;
+				height: 100vh;
+			}
+			.flex-center {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+			}
+      button {
+        padding: 5px;
+        background: transparent;
+        text-shadow: 1px 1px 1px #202020;
+        font-family: "Lato", sans-serif;
+        font-size: 10pt;
+        border: 1px solid lightblue;
+        color: lightblue; 
+      }
+
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A-art</title>
+
+    <script defer src="/__/firebase/5.0.4/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.0.4/firebase-auth.js"></script>
+    <script defer src="/__/firebase/5.0.4/firebase-database.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+      var database;
+      // Initialize Firebase
+      // Initialize Firebase  
+      var config = {
+        apiKey: "AIzaSyB3FUoYUpUxfa8kUbVHBos8XNRowTD0f40",
+        authDomain: "a-art-23e6c.firebaseapp.com",
+        databaseURL: "https://a-art-23e6c.firebaseio.com",
+        projectId: "a-art-23e6c",
+        storageBucket: "a-art-23e6c.appspot.com",
+        messagingSenderId: "731598094528"
+      };
+      firebase.initializeApp(config);
+
+      database = firebase.database();
+
+      var score;
+      var ref = database.ref('score');
+      var starCountRef = firebase.database().ref('score/' + '-LDkF5xmLadNRnY3aKTa' + '/score');
+
+      starCountRef.on('value', function(snapshot) {
+          score = snapshot.val();
+          document.getElementById("score").innerHTML = score;
+      });
+
+      function increment(){
+          score += 1;
+          updateval();
+          document.getElementById("score").innerHTML = score;
+      }
+
+      function updateval(){
+          database.ref('score/-LDkF5xmLadNRnY3aKTa/score').set(score);
+      }
+
+      function subdata(){
+        var data = {
+          score: score
+        }
+        console.log(data)
+        ref.push(data);
+      }
+
+      </script>
+  </head>
+  <body>
+    <div class = "flex-center">
+      <h1 id="score"></h1>
+      <button id="btn" onclick="increment()"> click </button>
+    </div>
+  </body>
+
+</html>
